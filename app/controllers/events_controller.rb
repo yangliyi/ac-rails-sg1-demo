@@ -4,6 +4,11 @@ class EventsController < ApplicationController
   # /events/index => index.html.erb
   def index
     @events = Event.page(params[:page]).per(5) # [<Event id:1>, <Event id:2>, <Event id:3>...]
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render :json => @events.to_json }
+    end
   end
 
   # /events/new => new.html.erb
@@ -18,7 +23,7 @@ class EventsController < ApplicationController
     if @event.save
       flash[:notice] = "Event is created successfully!"
 
-      redirect_to :action => :index
+      redirect_to events_path # /events
     else
       render :action => :new
     end
@@ -26,6 +31,10 @@ class EventsController < ApplicationController
 
   # /events/show/:id => show.html.erb
   def show
+    respond_to do |format|
+      format.html
+      format.json { render :json => @event.to_json }
+    end
   end
 
   # /events/edit/:id => edit.html.erb
@@ -36,7 +45,7 @@ class EventsController < ApplicationController
   def update
     if @event.update(event_params)
       flash[:notice] = "Event is updated successfully!"
-      redirect_to :action => :show, :id => @event
+      redirect_to event_path(@event) # /events/:id
     else
       render :action => :edit
     end
@@ -48,7 +57,7 @@ class EventsController < ApplicationController
 
     flash[:alert] = "Event is destroyed!"
 
-    redirect_to :action => :index
+    redirect_to events_path # /events
   end
 
   private
