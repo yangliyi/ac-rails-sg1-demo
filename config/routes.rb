@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   get "welcome/say_hello" => "welcome#say"
   get "welcome" => "welcome#index"
 
-  resources :events
+  resources :events do
+    resources :attendees, :controller => "event_attendees"
+  end
 
   root :to => "welcome#index"
 
