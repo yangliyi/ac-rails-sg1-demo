@@ -7,7 +7,7 @@
  <%= link_to 'Show', event_path(event) %>
  <%= link_to 'JSON', event_path(event, :format => :json) %>
  <%= link_to 'Edit', edit_event_path(event) %>
- <%= link_to 'Delete', event_path(event), :method => :delete %>
+ <%= link_to 'Delete', event_path(event), :method => :delete, :class => "btn btn-primary" %>
  </li>
 <% end %>
 </ul>
