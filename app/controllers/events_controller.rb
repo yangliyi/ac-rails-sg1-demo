@@ -60,10 +60,31 @@ class EventsController < ApplicationController
     redirect_to events_path # /events
   end
 
+  def latest
+    @events = Event.order("id desc").limit(5)
+  end
+
+  def bulk_delete
+    Event.destroy_all
+    flash[:notice] = "Successfully deleted all events!"
+    redirect_to events_path
+  end
+
+  def bulk_update
+    ids = Array(params[:ids])
+    events = Event.where(:id => ids)
+
+    events.each do |e|
+      e.destroy
+    end
+
+    redirect_to events_path
+  end
+
   private
 
   def event_params
-    params.require(:event).permit(:name, :description, :category_id)
+    params.require(:event).permit(:name, :description, :category_id, :group_ids => [])
   end
 
   def set_event

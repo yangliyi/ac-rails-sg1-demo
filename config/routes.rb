@@ -6,6 +6,13 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :attendees, :controller => "event_attendees"
+
+    collection do
+      get :latest
+
+      post :bulk_delete
+      post :bulk_update
+    end
   end
 
   root :to => "welcome#index"

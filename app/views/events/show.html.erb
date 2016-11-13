@@ -3,6 +3,12 @@
 <p>Description: <%= @event.description %></p>
 <p>Capacity: <%= @event.capacity %></p>
 
+<p>
+Group:
+<% @event.groups.each do |g| %>
+<%= g.name %>
+<% end %>
+</p>
 <p><%= link_to "Attendee List", event_attendees_path(@event.id) %></p>
 
 <%= link_to "Back to index", :controller => "events", :action => "index" %>

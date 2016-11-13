@@ -1,8 +1,13 @@
+<%= link_to 'Latest Events', latest_events_path %>
+<%= button_to "Delete All Events", bulk_delete_events_path, :class => "btn btn-danger", :id => "bulk-delete" %>
+
 <h1>Event List</h1>
 
+<%= form_tag bulk_update_events_path do %>
 <ul>
 <% @events.each do |event| %>
  <li>
+ <%= check_box_tag "ids[]", event.id %>
  <%= event.name %>
  <%= link_to 'Show', event_path(event) %>
  <%= link_to 'JSON', event_path(event, :format => :json) %>
@@ -11,6 +16,8 @@
  </li>
 <% end %>
 </ul>
+<%= submit_tag "Delete" %>
+<% end %>
 <%= link_to 'New Event', new_event_path %>
 
 <%= paginate @events %>
